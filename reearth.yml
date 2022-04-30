@@ -1,0 +1,32 @@
+id: myposition-plugin
+name: My position Plug-in
+version: 1.0.0
+extensions:
+  - id: myposition
+    type: widget
+    name:  My position Widget
+    schema:
+      groups:
+        - id: default
+          fields:
+            - id: positiontag
+              type: string
+              title: Position tag
+    widgetLayout:
+      extendable:
+        horizontally: true
+        vertically: true
+  - id: tracking
+    type: widget
+    name: Tracking Widget
+    schema:
+      groups:
+        - id: default
+          fields:
+            - id: positiontag
+              type: string
+              title: Position tag
+    widgetLayout:
+      extendable:
+        horizontally: true
+        vertically: true

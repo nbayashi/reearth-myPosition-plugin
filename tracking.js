@@ -16,18 +16,22 @@ const html = `
 <div id="wrapper">
   <div class="btn-margin">
       <button id="btn">
-          トラッキング開始
+          Tracking start
       </button>
+      <input type="checkbox" id="follow" name="follow">
+      <label for="follow">Follow</label>
   </div>
   <div class="txt-margin">
-      <p>時刻：<span id="time">???</span></p>
-      <p>緯度：<span id="latitude">???</span><span>度</span></p>
-      <p>経度：<span id="longitude">???</span><span>度</span></p>
+      <p>Time:<span id="time">???</span></p>
+      <p>Lat:<span id="latitude">???</span><span></span></p>
+      <p>Lng:<span id="longitude">???</span><span></span></p>
   </div>
 </div>
 <script>
   let lat, lng, watch_id;
 
+
+  
   var optionObj = {
   "enableHighAccuracy": true ,
   "timeout": 600000 ,
@@ -36,11 +40,12 @@ const html = `
 
   watch_id=0;
   document.getElementById("btn").onclick = function(){
-    if(document.getElementById("btn").innerHTML == "トラッキング停止"){
+    if(watch_id != 0){
 			// リアルタイム監視を停止
 			navigator.geolocation.clearWatch(watch_id);
+      watch_id=0;
 			// ボタン表記を変更
-      document.getElementById("btn").innerHTML ="トラッキング開始";
+      document.getElementById("btn").innerHTML ="Tracking start";
     }else{
       // 位置情報を取得する
       watch_id = navigator.geolocation.watchPosition(successCallback, errorCallback,optionObj);
@@ -67,11 +72,11 @@ const html = `
     }else{
       var head = position.coords.heading;
     }
-    document.getElementById("btn").innerHTML ="トラッキング停止";
+    document.getElementById("btn").innerHTML ="Tracking stop";
 
-    // console.log("lat=:",lat);
-    // console.log("lng=:",lng);
-    parent.postMessage({ lat, lng, head }, "*");
+    let follow = document.getElementById('follow').checked;
+
+    parent.postMessage({ lat, lng, head, follow }, "*");
   };
 
 
@@ -121,16 +126,18 @@ reearth.on("update", () => {
 
 
 reearth.on("message", msg => {
-  reearth.visualizer.camera.flyTo({
-    lat: msg.lat,
-    lng: msg.lng,
-    height: 500,
-    heading: msg.head * (Math.PI / 180),
-    pitch: -90 * (Math.PI / 180),
-    roll: 0,
-  }, {
-    duration: 2
-  });
+  if (follow == true) {
+    reearth.visualizer.camera.flyTo({
+      lat: msg.lat,
+      lng: msg.lng,
+      height: 500,
+      heading: msg.head * (Math.PI / 180),
+      pitch: -90 * (Math.PI / 180),
+      roll: 0,
+    }, {
+      duration: 1
+    });
+  }
   const mytag = reearth.widget.property.default.positiontag;
   const myposition_tmp = reearth.layers.findByTagLabels(mytag);
   const myposition = myposition_tmp.flatMap(ch => (ch.children || [ch]));

@@ -16,12 +16,12 @@ const html = `
 <div id="wrapper">
   <div class="btn-margin">
       <button id="btn" class="btn btn-outline-primary btn-lg">
-          現在地
+          Get location
       </button>
   </div>
   <div class="txt-margin">
-      <p>緯度：<span id="latitude">???</span><span>度</span></p>
-      <p>経度：<span id="longitude">???</span><span>度</span></p>
+      <p>Lat:<span id="latitude">???</span><span></span></p>
+      <p>Lng:<span id="longitude">???</span><span></span></p>
   </div>
 </div>
 <script>

@@ -7,7 +7,7 @@ If any tags are set, the layer will be displayed at the current location.
 
 GPSで取得した現在地にマップを移動します。
 任意のタグを設定していると、そのレイヤーを現在地に表示します。
-
+![](./img/gif1.gif)
 
 ## How to use
 ### My position widget

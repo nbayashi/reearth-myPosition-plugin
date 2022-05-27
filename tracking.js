@@ -28,7 +28,7 @@ const html = `
   </div>
 </div>
 <script>
-  let lat, lng, watch_id;
+  let lat, lng, watch_id, follow;
 
 
   
@@ -74,8 +74,7 @@ const html = `
     }
     document.getElementById("btn").innerHTML ="Tracking stop";
 
-    let follow = document.getElementById('follow').checked;
-
+    var follow = document.getElementById("follow").checked;
     parent.postMessage({ lat, lng, head, follow }, "*");
   };
 
@@ -126,7 +125,7 @@ reearth.on("update", () => {
 
 
 reearth.on("message", msg => {
-  if (follow == true) {
+  if (msg.follow == true) {
     reearth.visualizer.camera.flyTo({
       lat: msg.lat,
       lng: msg.lng,

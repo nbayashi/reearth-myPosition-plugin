@@ -96,7 +96,7 @@ reearth.on("message", msg => {
   reearth.visualizer.camera.flyTo({
     lat: msg.lat,
     lng: msg.lng,
-    height: 500,
+    height: 1000,
     heading: msg.head * (Math.PI / 180),
     pitch: -90 * (Math.PI / 180),
     roll: 0,
